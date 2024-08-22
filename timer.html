@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="timer.css">
+</head>
+<body>
+    <div class="stopwatch-container">
+        <div class="left-panel">
+            <div class="icon">
+                <i class="fa-solid fa-stopwatch-20"></i>
+            </div>
+            <div class="text">
+                <p class="title" style="color: firebrick;">Stopwatch</p>
+                <p class="subtitle">Using JavaScript</p>
+            </div>
+        </div>.
+        <div class="right-panel">
+            <div class="timer-display">
+                <h1 id="timer">0:0:0</h1>
+            </div>
+            <div class="button-group">
+                <button class="control-button" id="startButton"><i class="fa-solid fa-play"></i></button>
+                <button class="control-button" id="stopButton"><i class="fa-solid fa-stop"></i></button>
+                <button class="control-button" id="resetButton"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let hours = 0, minutes = 0, seconds = 0;
+        let timerInterval;
+        const timerElement = document.getElementById('timer');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const resetButton = document.getElementById('resetButton');
+
+        startButton.addEventListener('click', () => {
+            if (!timerInterval) {
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        });
+
+        resetButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            hours = 0;
+            minutes = 0;
+            seconds = 0;
+            updateTimerDisplay();
+        });
+
+        function updateTimer() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            timerElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+    </script>
+</body>
+</html>
